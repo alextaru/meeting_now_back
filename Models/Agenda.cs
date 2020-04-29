@@ -21,9 +21,9 @@ namespace MeetingNow.Model{
 
 
         [Required(ErrorMessage = "Este campo é obrigatorio")]
-        public DataType DataInit {get; set;}
+        public string DataInit {get; set;}
 
         [Required(ErrorMessage = "Este campo é obrigatorio")]
-        public DataType DataEnd {get; set;}
+        public string DataEnd {get; set;}
     }
 }
