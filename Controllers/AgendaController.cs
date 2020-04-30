@@ -7,9 +7,11 @@ using Microsoft.EntityFrameworkCore;
 using System.Linq;
 using System;
 using System.Globalization;
+using Microsoft.AspNetCore.Cors;
 
 namespace MeetingNow.Controllers{
     
+    [EnableCors("AnotherPolicy")]    
     [ApiController]
     [Route("v1/agenda")]
     public class AgendaController : ControllerBase{
@@ -29,7 +31,7 @@ namespace MeetingNow.Controllers{
         ){
             if(ModelState.IsValid){
 
-                string format = "yyyy-MM-dd hh:mm";
+                string format = "yyyy-MM-dd HH:mm";
                 CultureInfo provider = CultureInfo.InvariantCulture;
                 
                 DateTime dataInit = DateTime.ParseExact(model.DataInit, format, provider);
@@ -61,6 +63,13 @@ namespace MeetingNow.Controllers{
                         resultEnd = DateTime.Compare(dataEnd, end);
 
                         if( resultEnd == 0 || (resultInit > 0 && resultEnd < 0) ){
+                            valido = false;
+                        }
+
+                        resultInit = DateTime.Compare(dataInit, init);
+                        resultEnd = DateTime.Compare(dataEnd, end);
+
+                        if( resultInit < 0 && resultEnd > 0 ){
                             valido = false;
                         }
                         
