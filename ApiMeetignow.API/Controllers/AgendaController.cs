@@ -72,7 +72,7 @@ namespace ApiMeetignow.API.Controllers
                     {
                         var resultado = applicationServiceAgenda.Add(agendaDto);
                         if(resultado){
-                            return Ok(applicationServiceAgenda.GetAll());       
+                            return Ok(applicationServiceAgenda.GetAll().Where(x => x.Sala == agendaDto.Sala));       
                         }else{
                             return BadRequest("data invalida");
                         }
