@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Dtos\" />
+    <Folder Include="Interfaces\" />
+    <Folder Include="Interfaces\Mappers\" />
+    <Folder Include="Mappers\" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\ApiMeetignow.Domain.Core\ApiMeetignow.Domain.Core.csproj" />
+  </ItemGroup>
+</Project>
