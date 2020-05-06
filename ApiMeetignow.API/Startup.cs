@@ -25,12 +25,22 @@ namespace ApiMeetignow.API
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<SqlContext>(opt => opt.UseInMemoryDatabase("Database"));
-            services.AddControllers();
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "API Model DDD", Version = "v1" });
             });
+            services.AddCors(options =>
+            {
+                options.AddPolicy("Policy1",
+                    builder =>
+                    {
+                        builder.WithOrigins("http://localhost:3000")
+                                            .AllowAnyHeader()
+                                            .AllowAnyMethod();
+                    });
+            });
+            services.AddControllers();
         }
 
         public void ConfigureContainer(ContainerBuilder builder)
@@ -56,6 +66,8 @@ namespace ApiMeetignow.API
             app.UseHttpsRedirection();
 
             app.UseRouting();
+
+            app.UseCors();
 
             app.UseAuthorization();
 

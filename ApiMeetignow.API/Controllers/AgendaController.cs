@@ -5,6 +5,7 @@ using System.Linq;
 using ApiMeetignow.API.Models;
 using ApiMeetignow.Application.Dtos;
 using ApiMeetignow.Application.Interfaces;
+using Microsoft.AspNetCore.Cors;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ApiMeetignow.API.Controllers
@@ -21,24 +22,28 @@ namespace ApiMeetignow.API.Controllers
             this.applicationServiceAgenda = applicationServiceAgenda;
         }
 
+        [EnableCors("Policy1")]
         [HttpGet]
         public ActionResult<List<string>> Get()
         {
             return Ok(applicationServiceAgenda.GetAll());
         }
 
+        [EnableCors("Policy1")]
         [HttpGet("{id}")]
         public ActionResult<string> Get(int id)
         {
             return Ok(applicationServiceAgenda.GetById(id));
         }
 
+        [EnableCors("Policy1")]
         [HttpGet("sala/{id}")]
         public ActionResult<string> GetSala(int id)
         {
             return Ok(applicationServiceAgenda.GetAll().Where(x => x.Sala == id));
         }
 
+        [EnableCors("Policy1")]
         [HttpPost]
         public ActionResult Post([FromBody] AgendaModel agendaModel)
         {
