@@ -6,7 +6,7 @@ namespace ApiMeetignow.Application.Interfaces
 {
     public interface IApplicationServiceAgenda
     {
-        void Add(AgendaDto agendaDto);
+        bool Add(AgendaDto agendaDto);
 
         void Update(AgendaDto agendaDto);
 

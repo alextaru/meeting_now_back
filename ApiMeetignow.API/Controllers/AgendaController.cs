@@ -57,68 +57,31 @@ namespace ApiMeetignow.API.Controllers
                 }
                 else
                 {
-                    var agendas = applicationServiceAgenda.GetAll().Where(x => x.Sala == agendaModel.Sala);
-
-                    bool valido = true;
-
-                    foreach (AgendaDto item in agendas)
+                    AgendaDto agendaDto = new AgendaDto()
                     {
-                       
+                        Id = 0,
+                        Sala = agendaModel.Sala,
+                        Responsavel = agendaModel.Responsavel,
+                        Tema = agendaModel.Tema,
+                        DataInit = dataInit,
+                        DataEnd = dataEnd
+                    };
 
-                        int resultInit = DateTime.Compare(dataInit, item.DataInit);
-                        int resultEnd = DateTime.Compare(dataInit, item.DataEnd);
 
-                        if ((resultInit == 0) || (resultInit > 0 && resultEnd < 0))
-                        {
-                            valido = false;
-                        }
-
-                        resultInit = DateTime.Compare(dataEnd, item.DataInit);
-                        resultEnd = DateTime.Compare(dataEnd, item.DataEnd);
-
-                        if (resultEnd == 0 || (resultInit > 0 && resultEnd < 0))
-                        {
-                            valido = false;
-                        }
-
-                        resultInit = DateTime.Compare(dataInit, item.DataInit);
-                        resultEnd = DateTime.Compare(dataEnd, item.DataEnd);
-
-                        if (resultInit < 0 && resultEnd > 0)
-                        {
-                            valido = false;
-                        }
-
-                    }
-                    if (valido)
+                    try
                     {
-                        AgendaDto agendaDto = new AgendaDto()
-                        {
-                            Id = 0,
-                            Sala = agendaModel.Sala,
-                            Responsavel = agendaModel.Responsavel,
-                            Tema = agendaModel.Tema,
-                            DataInit = dataInit,
-                            DataEnd = dataEnd
-                        };
-
-                        try
-                        {
-                            applicationServiceAgenda.Add(agendaDto);
-                            return Ok(applicationServiceAgenda.GetAll());
-                        }
-                        catch (Exception ex)
-                        {
-                            return BadRequest(ex);
+                        var resultado = applicationServiceAgenda.Add(agendaDto);
+                        if(resultado){
+                            return Ok(applicationServiceAgenda.GetAll());       
+                        }else{
+                            return BadRequest("data invalida");
                         }
                     }
-                    else
+                    catch (Exception ex)
                     {
-                        return BadRequest("data invalida");
+                        return BadRequest(ex);
                     }
                 }
-
-                  
             }
             else
             {
